@@ -8,7 +8,7 @@ import (
 
 	"github.com/godome/godome/pkg/component/adapter"
 	"github.com/godome/godome/pkg/component/provider/repository"
-	mongoAdapter "github.com/godome/plugins/pkg/mongo"
+	mongoPlugin "github.com/godome/plugins/pkg/mongo-plugin"
 )
 
 const PostRepositoryName = "PostRepository"
@@ -21,7 +21,7 @@ type PostRepository interface {
 
 type postRepository struct {
 	repository.Repository
-	postCollection mongoAdapter.MongoCollection
+	postCollection mongoPlugin.MongoCollection
 }
 
 func newPostRepository(a adapter.Adapter) PostRepository {
@@ -31,7 +31,7 @@ func newPostRepository(a adapter.Adapter) PostRepository {
 	return &postRepository{
 		Repository: r,
 		postCollection: r.
-			GetAdapter(a.Metadata().GetName()).(mongoAdapter.MongoAdapter).
+			GetAdapter(a.Metadata().GetName()).(mongoPlugin.MongoAdapter).
 			Collection("post"),
 	}
 }

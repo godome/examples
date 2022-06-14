@@ -2,12 +2,13 @@ package helloworld
 
 import (
 	"github.com/godome/godome/pkg/component/module"
-	fiberHandler "github.com/godome/plugins/pkg/fiber"
+	fiberPlugin "github.com/godome/plugins/pkg/fiber-plugin"
+
 	"github.com/gofiber/fiber/v2"
 )
 
-func newHelloworldHandler(m module.Module) fiberHandler.FiberHandler {
-	return fiberHandler.
+func newHelloworldHandler(m module.Module) fiberPlugin.FiberHandler {
+	return fiberPlugin.
 		NewFiberHandler().
 		AddRoute(func(a *fiber.App) {
 			service := m.GetProvider(HelloworldServiceName).(HelloworldService)

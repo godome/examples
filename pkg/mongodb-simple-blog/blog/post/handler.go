@@ -2,12 +2,13 @@ package post
 
 import (
 	"github.com/godome/godome/pkg/component/module"
-	fiberHandler "github.com/godome/plugins/pkg/fiber"
+	fiberPlugin "github.com/godome/plugins/pkg/fiber-plugin"
+
 	"github.com/gofiber/fiber/v2"
 )
 
-func newPostHandler(m module.Module) fiberHandler.FiberHandler {
-	return fiberHandler.
+func newPostHandler(m module.Module) fiberPlugin.FiberHandler {
+	return fiberPlugin.
 		NewFiberHandler().
 		AddRoute(func(a *fiber.App) {
 			service := m.GetProvider(PostServiceName).(PostService)

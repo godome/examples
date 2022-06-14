@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/godome/godome v0.0.0-20220614102531-83a7057bd096
-	github.com/godome/plugins v0.0.0-20220614114759-4aa31521f342
+	github.com/godome/plugins v0.0.0-20220614134638-555895f26986
 	github.com/gofiber/fiber/v2 v2.34.0
 )
 
