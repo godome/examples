@@ -3,8 +3,8 @@ module github.com/godome/examples
 go 1.17
 
 require (
-	github.com/godome/godome v0.0.0-20220609120913-a37fdbf31268
-	github.com/godome/plugins v0.0.0-20220613101731-4261ceab704f
+	github.com/godome/godome v0.0.0-20220614102531-83a7057bd096
+	github.com/godome/plugins v0.0.0-20220614114759-4aa31521f342
 	github.com/gofiber/fiber/v2 v2.34.0
 )
 

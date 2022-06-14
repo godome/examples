@@ -15,7 +15,7 @@ func newServiceFixture() *serviceFixture {
 	f := new(serviceFixture)
 	// init helloworld module
 	module := helloworld.NewHelloworldModule()
-	f.service = module.GetProvider(helloworld.ServiceType).(helloworld.HelloworldService)
+	f.service = module.GetProvider(helloworld.HelloworldServiceName).(helloworld.HelloworldService)
 	return f
 }
 

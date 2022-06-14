@@ -1,13 +1,11 @@
 package helloworld
 
-import "github.com/godome/godome/pkg/module"
-
-const moduleName = "helloWorld"
+import "github.com/godome/godome/pkg/component/module"
 
 func NewHelloworldModule() module.Module {
-	m := module.NewModule(moduleName)
+	m := module.NewModule("helloWorld")
 	// Add service
-	m.SetProvider(newHelloworldService(m))
+	m.SetProvider(newHelloworldService())
 	// Add (fiber http server) handler
 	m.SetProvider(newHelloworldHandler(m))
 	return m

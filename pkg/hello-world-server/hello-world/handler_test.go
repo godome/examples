@@ -7,6 +7,7 @@ import (
 
 	helloworld "github.com/godome/examples/pkg/hello-world-server/hello-world"
 	"github.com/godome/examples/pkg/hello-world-server/mocks"
+	"github.com/godome/godome/pkg/component"
 	fiberHandler "github.com/godome/plugins/pkg/fiber"
 	"github.com/stretchr/testify/assert"
 )
@@ -22,10 +23,10 @@ func newHandlerFixture() *handlerFixture {
 	module := helloworld.NewHelloworldModule()
 	// mocks
 	f.mocks.HelloworldService = &mocks.HelloworldService{}
-	f.mocks.HelloworldService.On("GetType").Return(helloworld.ServiceType)
+	f.mocks.HelloworldService.On("Metadata").Return(component.NewMetadata(helloworld.HelloworldServiceName, "provider"))
 	module.SetProvider(f.mocks.HelloworldService)
 	// exposure
-	f.server = fiberHandler.NewFiberExposure("").ExposeModule(module)
+	f.server = fiberHandler.NewFiberExposure("", nil).ExposeModule(module)
 	return f
 }
 

@@ -3,11 +3,10 @@ package helloworld
 import (
 	"fmt"
 
-	"github.com/godome/godome/pkg/module"
-	"github.com/godome/godome/pkg/provider"
+	"github.com/godome/godome/pkg/component/provider"
 )
 
-const ServiceType provider.ProviderType = "HelloworldService"
+const HelloworldServiceName = "HelloworldService"
 
 type HelloworldService interface {
 	provider.Provider
@@ -15,22 +14,16 @@ type HelloworldService interface {
 }
 
 type helloworldService struct {
-	module       module.Module
-	providerType provider.ProviderType
+	provider.Provider
 }
 
-func newHelloworldService(m module.Module) HelloworldService {
+func newHelloworldService() HelloworldService {
 	return &helloworldService{
-		module:       m,
-		providerType: ServiceType,
+		Provider: provider.NewProvider(HelloworldServiceName),
 	}
 }
 
-func (r *helloworldService) GetType() provider.ProviderType {
-	return r.providerType
-}
-
 func (r *helloworldService) SayHello(name string) string {
-	r.module.Logger().Info("helloworldService has been called")
+	r.Logger().Info("helloworldService.SayHello has been called")
 	return fmt.Sprintf("hello %s", name)
 }

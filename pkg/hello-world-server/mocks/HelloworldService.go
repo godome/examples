@@ -3,7 +3,11 @@
 package mocks
 
 import (
-	provider "github.com/godome/godome/pkg/provider"
+	component "github.com/godome/godome/pkg/component"
+	config "github.com/godome/godome/pkg/config"
+
+	logger "github.com/godome/godome/pkg/logger"
+
 	mock "github.com/stretchr/testify/mock"
 )
 
@@ -12,15 +16,49 @@ type HelloworldService struct {
 	mock.Mock
 }
 
-// GetType provides a mock function with given fields:
-func (_m *HelloworldService) GetType() provider.ProviderType {
+// Config provides a mock function with given fields:
+func (_m *HelloworldService) Config() config.Config {
 	ret := _m.Called()
 
-	var r0 provider.ProviderType
-	if rf, ok := ret.Get(0).(func() provider.ProviderType); ok {
+	var r0 config.Config
+	if rf, ok := ret.Get(0).(func() config.Config); ok {
 		r0 = rf()
 	} else {
-		r0 = ret.Get(0).(provider.ProviderType)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(config.Config)
+		}
+	}
+
+	return r0
+}
+
+// Logger provides a mock function with given fields:
+func (_m *HelloworldService) Logger() logger.Logger {
+	ret := _m.Called()
+
+	var r0 logger.Logger
+	if rf, ok := ret.Get(0).(func() logger.Logger); ok {
+		r0 = rf()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(logger.Logger)
+		}
+	}
+
+	return r0
+}
+
+// Metadata provides a mock function with given fields:
+func (_m *HelloworldService) Metadata() component.Metadata {
+	ret := _m.Called()
+
+	var r0 component.Metadata
+	if rf, ok := ret.Get(0).(func() component.Metadata); ok {
+		r0 = rf()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(component.Metadata)
+		}
 	}
 
 	return r0

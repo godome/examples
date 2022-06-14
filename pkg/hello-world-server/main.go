@@ -11,7 +11,7 @@ func main() {
 
 	// Init (fiber http) exposure
 	fiberExposure.
-		NewFiberExposure("3000").
+		NewFiberExposure("3000", nil).
 		ExposeModule(helloworldModule).
 		Run()
 }
