@@ -2,7 +2,7 @@ package main
 
 import (
 	helloworld "github.com/godome/examples/pkg/hello-world-server/hello-world"
-	fiberExposure "github.com/godome/plugins/pkg/fiber"
+	fiberPlugin "github.com/godome/plugins/pkg/fiber-plugin"
 )
 
 func main() {
@@ -10,7 +10,7 @@ func main() {
 	helloworldModule := helloworld.NewHelloworldModule()
 
 	// Init (fiber http) exposure
-	fiberExposure.
+	fiberPlugin.
 		NewFiberExposure("3000", nil).
 		ExposeModule(helloworldModule).
 		Run()

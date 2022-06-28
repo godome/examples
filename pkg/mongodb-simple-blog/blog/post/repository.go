@@ -21,7 +21,6 @@ type PostRepository interface {
 
 type postRepository struct {
 	repository.Repository
-	postCollection mongoPlugin.MongoCollection
 }
 
 func newPostRepository(a adapter.Adapter) PostRepository {
@@ -30,17 +29,21 @@ func newPostRepository(a adapter.Adapter) PostRepository {
 
 	return &postRepository{
 		Repository: r,
-		postCollection: r.
-			GetAdapter(a.Metadata().GetName()).(mongoPlugin.MongoAdapter).
-			Collection("post"),
 	}
+}
+
+func (r *postRepository) getPostCollection() mongoPlugin.MongoCollection {
+	return r.
+		Repository.
+		GetAdapter(mongoPlugin.AdapterName).(mongoPlugin.MongoAdapter).
+		Collection("post")
 }
 
 func (r *postRepository) GetOne(id string) (*PostEntity, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	foundItem := new(PostEntity)
-	r.postCollection.FindOne(ctx, &PostEntity{ID: id}).Decode(foundItem)
+	r.getPostCollection().FindOne(ctx, &PostEntity{ID: id}).Decode(foundItem)
 	if foundItem.ID == "" {
 		return nil, fmt.Errorf("post with id [%s] is not found", id)
 	}
@@ -54,13 +57,13 @@ func (r *postRepository) Create(data *PostEntity) (*PostEntity, error) {
 
 	// avoid duplications
 	foundItem := new(PostEntity)
-	r.postCollection.FindOne(ctx, &PostEntity{ID: data.ID}).Decode(foundItem)
-	if foundItem != nil {
+	r.getPostCollection().FindOne(ctx, &PostEntity{ID: data.ID}).Decode(foundItem)
+	if foundItem.ID != "" {
 		return nil, fmt.Errorf("duplication error")
 	}
 
 	// operation
-	_, err := r.postCollection.InsertOne(ctx, data)
+	_, err := r.getPostCollection().InsertOne(ctx, data)
 	if err != nil {
 		return nil, err
 	}

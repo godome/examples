@@ -15,20 +15,24 @@ type PostService interface {
 
 type postService struct {
 	provider.Provider
-	postRepository PostRepository
+	module module.Module
 }
 
 func newPostService(m module.Module) PostService {
 	return &postService{
-		Provider:       provider.NewProvider(PostServiceName),
-		postRepository: m.GetProvider(PostRepositoryName).(PostRepository),
+		Provider: provider.NewProvider(PostServiceName),
+		module:   m,
 	}
 }
 
+func (r *postService) getPostRepository() PostRepository {
+	return r.module.GetProvider(PostRepositoryName).(PostRepository)
+}
+
 func (r *postService) GetPost(id string) (*PostEntity, error) {
-	return r.postRepository.GetOne(id)
+	return r.getPostRepository().GetOne(id)
 }
 
 func (r *postService) CreatePost(name string, description string) (*PostEntity, error) {
-	return r.postRepository.Create(&PostEntity{Name: name, Description: description})
+	return r.getPostRepository().Create(&PostEntity{Name: name, Description: description})
 }
